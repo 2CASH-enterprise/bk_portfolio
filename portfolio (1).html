@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agen'C AI — Développeur d'Agents IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0A0F;--bg-card:#111118;--bg-card2:#16161F;
+  --border:#1E1B2E;--border2:#2A2740;
+  --violet:#7C3AED;--violet2:#A78BFA;--violet-glow:rgba(124,58,237,0.15);
+  --text:#F8FAFC;--muted:#94A3B8;--faint:#475569;
+  --green:#22C55E;--amber:#F59E0B;--cyan:#22D3EE;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:18px 48px;background:rgba(10,10,15,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;letter-spacing:.04em;color:var(--violet2)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.03em;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--violet);color:#fff;text-decoration:none;padding:9px 20px;border-radius:7px;font-size:13px;font-weight:600;transition:background .2s}
+.nav-cta:hover{background:#6D28D9}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 48px 80px;position:relative;overflow:hidden}
+.orb1{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,.1) 0%,transparent 70%);top:-200px;right:-150px;pointer-events:none}
+.orb2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.04) 0%,transparent 70%);bottom:0;left:-100px;pointer-events:none}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:var(--violet2);background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.25);border-radius:100px;padding:5px 14px;margin-bottom:28px}
+.tag-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(36px,5vw,56px);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:20px}
+h1 span{background:linear-gradient(135deg,var(--violet2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:17px;color:var(--muted);line-height:1.7;margin-bottom:36px;font-weight:300}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+.btn-main{display:inline-flex;align-items:center;gap:8px;background:var(--violet);color:#fff;text-decoration:none;padding:14px 28px;border-radius:8px;font-size:15px;font-weight:600;transition:background .2s,transform .15s;border:none;cursor:pointer}
+.btn-main:hover{background:#6D28D9;transform:translateY(-1px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;padding:14px 24px;border-radius:8px;font-size:14px;font-weight:500;border:1px solid var(--border2);transition:color .2s,border-color .2s;background:none;cursor:pointer}
+.btn-ghost:hover{color:var(--text);border-color:var(--violet2)}
+
+/* TERMINAL */
+.terminal{background:#0D0D14;border:1px solid var(--border2);border-radius:12px;overflow:hidden;box-shadow:0 0 60px rgba(124,58,237,.07),0 20px 60px rgba(0,0,0,.5)}
+.tbar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#111118;border-bottom:1px solid var(--border)}
+.tdot{width:10px;height:10px;border-radius:50%}
+.tr{background:#FF5F57}.ty{background:#FFBD2E}.tg{background:#28C840}
+.ttitle{flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint)}
+.tbody{padding:20px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.8;min-height:260px}
+.tcursor{display:inline-block;width:8px;height:14px;background:var(--violet2);animation:blink 1.1s step-end infinite;vertical-align:middle;margin-left:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* STATS */
+.stats{border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{text-align:center;padding:40px 20px;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-n{font-family:'Space Grotesk',sans-serif;font-size:40px;font-weight:700;letter-spacing:-.03em;background:linear-gradient(135deg,var(--violet2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;margin-bottom:6px}
+.stat-l{font-size:13px;color:var(--faint)}
+
+/* SECTIONS */
+section{padding:96px 48px}
+.inner{max-width:1100px;margin:0 auto}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:var(--violet2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(26px,3.5vw,38px);font-weight:700;letter-spacing:-.02em;line-height:1.2;margin-bottom:14px}
+.sec-sub{font-size:16px;color:var(--muted);max-width:520px;margin-bottom:56px;font-weight:300;line-height:1.7}
+.divider{height:1px;background:var(--border);margin:0 auto}
+
+/* ROI CALCULATOR */
+.calc-box{background:var(--bg-card);border:1px solid var(--border2);border-radius:16px;overflow:hidden}
+.calc-top{padding:36px 40px;border-bottom:1px solid var(--border)}
+.calc-top h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
+.calc-top p{font-size:14px;color:var(--muted);font-weight:300}
+.calc-body{padding:36px 40px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.calc-left{}
+.q-group{margin-bottom:28px}
+.q-label{font-size:13px;font-weight:500;color:var(--muted);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.q-val{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--violet2);font-weight:500}
+input[type=range]{width:100%;height:4px;background:var(--border2);border-radius:2px;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--violet);cursor:pointer;box-shadow:0 0 0 3px rgba(124,58,237,.2)}
+input[type=range]::-webkit-slider-runnable-track{height:4px;background:var(--border2);border-radius:2px}
+.calc-right{background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.12);border-radius:12px;padding:28px}
+.result-title{font-size:12px;color:var(--faint);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.result-big{font-family:'Space Grotesk',sans-serif;font-size:48px;font-weight:700;letter-spacing:-.03em;color:var(--violet2);margin-bottom:4px;line-height:1}
+.result-unit{font-size:14px;color:var(--muted);margin-bottom:20px}
+.result-items{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.result-item{display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.ri-label{color:var(--muted)}
+.ri-val{font-weight:500;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px}
+.calc-cta{display:block;text-align:center;background:var(--violet);color:#fff;text-decoration:none;padding:13px 20px;border-radius:8px;font-size:14px;font-weight:600;transition:background .2s;margin-top:8px;cursor:pointer;border:none;width:100%}
+.calc-cta:hover{background:#6D28D9}
+.calc-note{font-size:11px;color:var(--faint);text-align:center;margin-top:10px;font-family:'JetBrains Mono',monospace}
+
+/* DEMOS */
+.demos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.demo-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px;display:flex;flex-direction:column;gap:16px;transition:border-color .2s,transform .2s;position:relative;overflow:hidden}
+.demo-card:hover{border-color:rgba(124,58,237,.4);transform:translateY(-3px)}
+.demo-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--violet),transparent);opacity:0;transition:opacity .2s}
+.demo-card:hover::before{opacity:1}
+.demo-header{display:flex;align-items:center;gap:14px}
+.demo-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.di-purple{background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.2)}
+.di-cyan{background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.15)}
+.di-amber{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15)}
+.di-green{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.15)}
+.demo-title{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;letter-spacing:-.01em}
+.demo-sector{font-size:11px;color:var(--faint);font-family:'JetBrains Mono',monospace;margin-top:2px}
+.demo-desc{font-size:13.5px;color:var(--muted);line-height:1.65;font-weight:300}
+.demo-tags{display:flex;flex-wrap:wrap;gap:6px}
+.dtag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--faint)}
+.demo-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:4px 10px;border-radius:100px;font-family:'JetBrains Mono',monospace}
+.badge-live{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.badge-demo{background:rgba(124,58,237,.1);color:var(--violet2);border:1px solid rgba(124,58,237,.2)}
+.bdot{width:5px;height:5px;border-radius:50%;background:currentColor}
+.bdot-live{animation:pulse 2s ease-in-out infinite}
+
+/* PROJECTS (real) */
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.proj-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .25s,transform .25s,box-shadow .25s}
+.proj-card:hover{border-color:rgba(124,58,237,.35);transform:translateY(-3px);box-shadow:0 16px 50px rgba(124,58,237,.09)}
+.pc-head{padding:24px 24px 18px;border-bottom:1px solid var(--border);position:relative}
+.pc-icon{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:14px}
+.pc-status{position:absolute;top:24px;right:24px;display:flex;align-items:center;gap:5px;font-size:10px;font-weight:500;font-family:'JetBrains Mono',monospace}
+.pcs-dot{width:5px;height:5px;border-radius:50%}
+.pcs-live-dot{background:var(--green);animation:pulse 2s ease-in-out infinite}
+.pcs-live{color:var(--green)}
+.pcs-arch-dot{background:var(--amber)}
+.pcs-arch{color:var(--amber)}
+.pc-title{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;margin-bottom:4px;letter-spacing:-.01em}
+.pc-type{font-size:11px;color:var(--faint)}
+.pc-body{padding:20px 24px;flex:1;display:flex;flex-direction:column;gap:16px}
+.pc-desc{font-size:13px;color:var(--muted);line-height:1.6;font-weight:300}
+.pc-feats{display:flex;flex-direction:column;gap:7px}
+.pc-feat{font-size:12.5px;color:var(--muted);display:flex;align-items:flex-start;gap:8px;line-height:1.4}
+.pc-feat::before{content:'→';color:var(--violet2);font-size:11px;flex-shrink:0;margin-top:1px}
+.pc-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px;background:rgba(124,58,237,.04);border:1px solid rgba(124,58,237,.07);border-radius:8px}
+.pm{text-align:center}
+.pm-v{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:var(--violet2);display:block;line-height:1;margin-bottom:3px}
+.pm-l{font-size:10px;color:var(--faint);font-family:'JetBrains Mono',monospace}
+.pc-stack{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto}
+.stag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--faint)}
+.pc-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.pc-link{font-size:13px;color:var(--violet2);text-decoration:none;font-weight:500;display:flex;align-items:center;gap:5px;transition:gap .15s}
+.pc-link:hover{gap:9px}
+.pc-per{font-size:10px;color:var(--faint);font-family:'JetBrains Mono',monospace}
+
+/* METHODE */
+.methode-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.methode-grid::after{content:'';position:absolute;top:28px;left:60px;right:60px;height:1px;background:linear-gradient(90deg,transparent,var(--border2) 20%,var(--border2) 80%,transparent);z-index:0}
+.m-step{padding:0 20px;position:relative;z-index:1}
+.m-num{width:56px;height:56px;border-radius:50%;background:var(--bg-card);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--violet2);margin-bottom:20px}
+.m-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;margin-bottom:10px;letter-spacing:-.01em}
+.m-desc{font-size:13.5px;color:var(--muted);line-height:1.6;font-weight:300}
+
+/* STACK */
+.stack-g{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.scat{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.srow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.stk{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;padding:6px 12px;border-radius:6px;background:rgba(124,58,237,.05);border:1px solid rgba(124,58,237,.12);color:var(--violet2)}
+
+/* CALENDLY */
+.cal-section{background:rgba(124,58,237,.03);border-top:1px solid var(--border)}
+.cal-box{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.cal-top{padding:48px 48px 36px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.cal-title{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;letter-spacing:-.02em;margin-bottom:14px;line-height:1.2}
+.cal-desc{font-size:15px;color:var(--muted);line-height:1.7;font-weight:300;margin-bottom:28px}
+.cal-perks{display:flex;flex-direction:column;gap:10px}
+.cal-perk{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--muted)}
+.cal-perk::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.cal-embed{border-top:1px solid var(--border);background:#0D0D14;min-height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:48px}
+.cal-placeholder{text-align:center}
+.cal-placeholder p{color:var(--muted);font-size:14px;margin-bottom:20px;line-height:1.6}
+.cal-iframe-note{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.12);border-radius:6px;padding:10px 16px;display:inline-block}
+
+/* FOOTER */
+footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.f-logo{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--violet2)}
+.f-copy{font-size:12px;color:var(--faint);font-family:'JetBrains Mono',monospace}
+
+@media(max-width:900px){
+  nav{padding:14px 20px}
+  .nav-links{display:none}
+  section{padding:60px 20px}
+  .hero{padding:90px 20px 60px}
+  .hero-inner,.calc-body,.demos-grid,.proj-grid,.methode-grid,.stack-g,.cal-top{grid-template-columns:1fr;gap:32px}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat{border-right:none;border-bottom:1px solid var(--border);padding:28px}
+  footer{flex-direction:column;gap:10px;padding:20px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">AGEN'C AI</div>
+  <ul class="nav-links">
+    <li><a href="#demos">Démos</a></li>
+    <li><a href="#projets">Projets</a></li>
+    <li><a href="#methode">Méthode</a></li>
+    <li><a href="#stack">Stack</a></li>
+  </ul>
+  <a href="https://calendly.com/thee-ai/30min" target="_blank" class="nav-cta">📅 Réserver une démo</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="orb1"></div><div class="orb2"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag"><span class="tag-dot"></span>Disponible pour nouveaux projets</div>
+      <h1>Développeur d'agents IA pour <span>automatiser votre entreprise</span></h1>
+      <p class="hero-sub">J'aide les PME et startups à gagner du temps grâce à des agents IA, des chatbots et des automatisations sur mesure — déployés en production, pas juste en démo.</p>
+      <div class="hero-ctas">
+        <button class="btn-main" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">📅 Réserver une démo gratuite de 20 min</button>
+        <a href="#projets" class="btn-ghost">Voir mes réalisations →</a>
+      </div>
+    </div>
+    <div>
+      <div class="terminal">
+        <div class="tbar"><div class="tdot tr"></div><div class="tdot ty"></div><div class="tdot tg"></div><div class="ttitle">agent_deploy.sh</div></div>
+        <div class="tbody" id="term"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><span class="stat-n">3</span><span class="stat-l">Agents en production</span></div>
+  <div class="stat"><span class="stat-n">10+</span><span class="stat-l">Pays couverts</span></div>
+  <div class="stat"><span class="stat-n">1 514</span><span class="stat-l">Prospects qualifiés auto.</span></div>
+  <div class="stat"><span class="stat-n">20k+</span><span class="stat-l">Lignes de code déployées</span></div>
+</div>
+
+<!-- ROI CALCULATOR -->
+<section id="calcul" style="background:rgba(124,58,237,.02);border-bottom:1px solid var(--border)">
+  <div class="inner">
+    <p class="eyebrow">// calculateur</p>
+    <h2>Combien de temps perdez-vous chaque semaine ?</h2>
+    <p class="sec-sub">Répondez à 3 questions. Je vous montre ce qu'un agent IA pourrait vous faire gagner.</p>
+    <div class="calc-box">
+      <div class="calc-top">
+        <h3>Estimez votre potentiel d'automatisation</h3>
+        <p>Tâches répétitives : réponses clients, qualification, relances, publication de contenu, saisie de données…</p>
+      </div>
+      <div class="calc-body">
+        <div class="calc-left">
+          <div class="q-group">
+            <div class="q-label">Heures/semaine sur des tâches répétitives <span class="q-val" id="v1">10h</span></div>
+            <input type="range" min="2" max="40" value="10" step="1" oninput="calc()" id="r1">
+          </div>
+          <div class="q-group">
+            <div class="q-label">Nombre de personnes dans votre équipe <span class="q-val" id="v2">3 personnes</span></div>
+            <input type="range" min="1" max="20" value="3" step="1" oninput="calc()" id="r2">
+          </div>
+          <div class="q-group">
+            <div class="q-label">Coût horaire moyen d'un employé <span class="q-val" id="v3">25 €/h</span></div>
+            <input type="range" min="15" max="100" value="25" step="5" oninput="calc()" id="r3">
+          </div>
+        </div>
+        <div class="calc-right">
+          <div class="result-title">Économie estimée / mois</div>
+          <div class="result-big" id="res-main">600 €</div>
+          <div class="result-unit">soit <span id="res-h">60h</span> récupérées par mois</div>
+          <div class="result-items">
+            <div class="result-item"><span class="ri-label">Heures automatisables (60%)</span><span class="ri-val" id="ri1">24h/semaine</span></div>
+            <div class="result-item"><span class="ri-label">Gain mensuel en temps</span><span class="ri-val" id="ri2">96h</span></div>
+            <div class="result-item"><span class="ri-label">Économie annuelle estimée</span><span class="ri-val" id="ri3">7 200 €</span></div>
+          </div>
+          <button class="calc-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">👉 Discutons de ce qu'on peut automatiser →</button>
+          <p class="calc-note">Démo gratuite · Sans engagement · 20 minutes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMOS -->
+<section id="demos">
+  <div class="inner">
+    <p class="eyebrow">// démonstrations</p>
+    <h2>Ce que je sais construire</h2>
+    <p class="sec-sub">Des agents pour des secteurs variés — certains issus de mes réalisations, d'autres montrent l'étendue des cas d'usage.</p>
+    <div class="demos-grid">
+
+      <div class="demo-card">
+        <div class="demo-header">
+          <div class="demo-icon di-purple">🌍</div>
+          <div>
+            <div class="demo-title">Agent marketing multi-réseaux</div>
+            <div class="demo-sector">PME · E-commerce · Restaurants</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <span class="demo-badge badge-live"><span class="bdot bdot-live"></span>En production</span>
+        </div>
+        <p class="demo-desc">Publication automatique sur Facebook, Instagram, LinkedIn et TikTok. Génération de contenu par IA selon votre secteur, campagnes Click-to-WhatsApp et rapports PDF hebdomadaires.</p>
+        <div class="demo-tags"><span class="dtag">Claude API</span><span class="dtag">Meta Graph API</span><span class="dtag">WhatsApp</span><span class="dtag">Multi-réseaux</span></div>
+      </div>
+
+      <div class="demo-card">
+        <div class="demo-header">
+          <div class="demo-icon di-cyan">🏠</div>
+          <div>
+            <div class="demo-title">Assistant IA pour agences immobilières</div>
+            <div class="demo-sector">Immobilier · Agences indépendantes</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <span class="demo-badge badge-live"><span class="bdot bdot-live"></span>En production</span>
+        </div>
+        <p class="demo-desc">Chatbot installable en 1 ligne de code sur n'importe quel site. Qualifie les prospects 24h/24, planifie les rendez-vous et envoie un résumé structuré à l'agent par email.</p>
+        <div class="demo-tags"><span class="dtag">GPT-4o-mini</span><span class="dtag">FastAPI</span><span class="dtag">Snippet JS</span><span class="dtag">Email auto</span></div>
+      </div>
+
+      <div class="demo-card">
+        <div class="demo-header">
+          <div class="demo-icon di-amber">⚖️</div>
+          <div>
+            <div class="demo-title">Assistant documentaire pour avocats</div>
+            <div class="demo-sector">Juridique · Cabinets d'avocats</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <span class="demo-badge badge-demo"><span class="bdot"></span>Démo disponible</span>
+        </div>
+        <p class="demo-desc">Agent capable d'analyser des contrats, de répondre à des questions sur la base documentaire du cabinet et de rédiger des résumés juridiques — en toute confidentialité.</p>
+        <div class="demo-tags"><span class="dtag">RAG</span><span class="dtag">PDF parsing</span><span class="dtag">LLM</span><span class="dtag">Confidentiel</span></div>
+      </div>
+
+      <div class="demo-card">
+        <div class="demo-header">
+          <div class="demo-icon di-green">📅</div>
+          <div>
+            <div class="demo-title">Agent de prise de rendez-vous</div>
+            <div class="demo-sector">Santé · Services · Beauté</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <span class="demo-badge badge-demo"><span class="bdot"></span>Démo disponible</span>
+        </div>
+        <p class="demo-desc">Chatbot WhatsApp ou site web qui gère vos réservations en autonomie : créneaux disponibles, confirmation, rappel automatique, gestion des annulations — sans secrétaire.</p>
+        <div class="demo-tags"><span class="dtag">WhatsApp API</span><span class="dtag">Calendrier</span><span class="dtag">Make.com</span><span class="dtag">Rappels auto</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJETS -->
+<section id="projets" style="background:rgba(124,58,237,.02);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="inner">
+    <p class="eyebrow">// réalisations</p>
+    <h2>Projets déployés en production</h2>
+    <p class="sec-sub">Des solutions réelles, pour des marchés réels — avec les chiffres qui vont avec.</p>
+    <div class="proj-grid">
+
+      <div class="proj-card">
+        <div class="pc-head">
+          <div class="pc-icon di-purple">🌍</div>
+          <div class="pc-status"><span class="pcs-dot pcs-live-dot"></span><span class="pcs-live">Production</span></div>
+          <div class="pc-title">Naomy AI</div>
+          <div class="pc-type">SaaS · Marketing Automation · Afrique</div>
+        </div>
+        <div class="pc-body">
+          <p class="pc-desc">Plateforme d'automatisation marketing pour entrepreneurs africains. Publication multi-réseaux, campagnes Click-to-WhatsApp, assistant IA via WhatsApp.</p>
+          <div class="pc-feats">
+            <div class="pc-feat">Génération de posts par IA (Claude)</div>
+            <div class="pc-feat">Publication Facebook, Instagram, LinkedIn, TikTok</div>
+            <div class="pc-feat">Tunnel WhatsApp IA — conversion prospects</div>
+            <div class="pc-feat">Module Restaurant : menu vocal + livraison</div>
+          </div>
+          <div class="pc-metrics">
+            <div class="pm"><span class="pm-v">10+</span><span class="pm-l">Pays africains</span></div>
+            <div class="pm"><span class="pm-v">11.5k</span><span class="pm-l">Lignes backend</span></div>
+            <div class="pm"><span class="pm-v">3</span><span class="pm-l">Plans tarifaires</span></div>
+            <div class="pm"><span class="pm-v">13</span><span class="pm-l">Tables BDD</span></div>
+          </div>
+          <div class="pc-stack"><span class="stag">Python</span><span class="stag">FastAPI</span><span class="stag">Supabase</span><span class="stag">Claude API</span><span class="stag">Meta API</span><span class="stag">PWA</span></div>
+        </div>
+        <div class="pc-foot">
+          <a href="https://agenc-ai.com/naomy/" target="_blank" class="pc-link">Voir le projet →</a>
+          <span class="pc-per">Mai 2026</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="pc-head">
+          <div class="pc-icon di-cyan">🏠</div>
+          <div class="pc-status"><span class="pcs-dot pcs-live-dot"></span><span class="pcs-live">Production</span></div>
+          <div class="pc-title">Sarah AI</div>
+          <div class="pc-type">SaaS · Immobilier · France &amp; Maroc</div>
+        </div>
+        <div class="pc-body">
+          <p class="pc-desc">Agent conversationnel pour agences immobilières. S'installe en 5 minutes, qualifie les prospects 24h/24 et planifie les rendez-vous sans intervention humaine.</p>
+          <div class="pc-feats">
+            <div class="pc-feat">Chatbot GPT-4o-mini, snippet 1 ligne</div>
+            <div class="pc-feat">Dashboard admin 10 pages + pipeline</div>
+            <div class="pc-feat">Prospection : 1 514 agences scrapées</div>
+            <div class="pc-feat">Séquence email 3 temps automatisée</div>
+          </div>
+          <div class="pc-metrics">
+            <div class="pm"><span class="pm-v">1 514</span><span class="pm-l">Agences scrapées</span></div>
+            <div class="pm"><span class="pm-v">403</span><span class="pm-l">N° WhatsApp</span></div>
+            <div class="pm"><span class="pm-v">5 min</span><span class="pm-l">Installation</span></div>
+            <div class="pm"><span class="pm-v">10</span><span class="pm-l">Pages dashboard</span></div>
+          </div>
+          <div class="pc-stack"><span class="stag">Python</span><span class="stag">FastAPI</span><span class="stag">PostgreSQL</span><span class="stag">GPT-4o-mini</span><span class="stag">Playwright</span></div>
+        </div>
+        <div class="pc-foot">
+          <a href="https://agenc-ai.com/sarah/" target="_blank" class="pc-link">Voir le projet →</a>
+          <span class="pc-per">2026</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="pc-head">
+          <div class="pc-icon di-amber">🚚</div>
+          <div class="pc-status"><span class="pcs-dot pcs-arch-dot"></span><span class="pcs-arch">Architecture</span></div>
+          <div class="pc-title">FastLivraison CI</div>
+          <div class="pc-type">Agent WhatsApp · Livraison · Côte d'Ivoire</div>
+        </div>
+        <div class="pc-body">
+          <p class="pc-desc">Agent WhatsApp de bout en bout pour la livraison urbaine en Côte d'Ivoire — adapté aux contraintes locales : sans adresses formelles, paiement mobile.</p>
+          <div class="pc-feats">
+            <div class="pc-feat">Onboarding conversationnel multi-étapes</div>
+            <div class="pc-feat">Orange Money, Wave, MTN MoMo intégrés</div>
+            <div class="pc-feat">Suivi temps réel + escalade humain</div>
+            <div class="pc-feat">100% no-code via Make.com</div>
+          </div>
+          <div class="pc-metrics">
+            <div class="pm"><span class="pm-v">12</span><span class="pm-l">Étapes auto.</span></div>
+            <div class="pm"><span class="pm-v">4</span><span class="pm-l">Paiements</span></div>
+            <div class="pm"><span class="pm-v">0</span><span class="pm-l">Ligne de code</span></div>
+            <div class="pm"><span class="pm-v">100%</span><span class="pm-l">No-code</span></div>
+          </div>
+          <div class="pc-stack"><span class="stag">WhatsApp API</span><span class="stag">Make.com</span><span class="stag">360dialog</span><span class="stag">Google Sheets</span></div>
+        </div>
+        <div class="pc-foot">
+          <span style="font-size:11px;color:var(--faint);font-family:'JetBrains Mono',monospace">Conception & architecture</span>
+          <span class="pc-per">2026</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- METHODE -->
+<section id="methode">
+  <div class="inner">
+    <p class="eyebrow">// comment ça marche</p>
+    <h2>Ma méthode en 4 étapes</h2>
+    <p class="sec-sub">Un processus clair, de la découverte à la mise en production — pas de surprise, pas de projet qui traîne.</p>
+    <div class="methode-grid">
+      <div class="m-step">
+        <div class="m-num">01</div>
+        <div class="m-title">Découverte du besoin</div>
+        <p class="m-desc">On identifie ensemble les tâches répétitives qui vous coûtent le plus de temps et les processus les plus faciles à automatiser en premier.</p>
+      </div>
+      <div class="m-step">
+        <div class="m-num">02</div>
+        <div class="m-title">Démonstration</div>
+        <p class="m-desc">Je vous montre un prototype ou une démo proche de votre cas concret — vous voyez l'agent travailler avant de vous engager.</p>
+      </div>
+      <div class="m-step">
+        <div class="m-num">03</div>
+        <div class="m-title">Développement</div>
+        <p class="m-desc">Développement itératif avec points réguliers. Vous voyez l'avancement en temps réel et pouvez ajuster en cours de route.</p>
+      </div>
+      <div class="m-step">
+        <div class="m-num">04</div>
+        <div class="m-title">Mise en production &amp; suivi</div>
+        <p class="m-desc">Déploiement sur votre environnement, formation à l'outil, et accompagnement post-lancement pour garantir que l'agent fonctionne.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack" style="background:rgba(124,58,237,.02);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="inner">
+    <p class="eyebrow">// technologies</p>
+    <h2>Stack technique</h2>
+    <p class="sec-sub">Les outils que j'utilise en production — pas seulement en théorie.</p>
+    <div class="stack-g">
+      <div>
+        <div class="scat">Intelligence Artificielle</div>
+        <div class="srow"><span class="stk">Claude (Anthropic)</span><span class="stk">GPT-4o-mini</span><span class="stk">GPT-4</span><span class="stk">Whisper</span></div>
+        <div class="scat">Backend</div>
+        <div class="srow"><span class="stk">Python</span><span class="stk">FastAPI</span><span class="stk">SQLAlchemy</span><span class="stk">Supabase</span><span class="stk">PostgreSQL</span></div>
+      </div>
+      <div>
+        <div class="scat">APIs & Intégrations</div>
+        <div class="srow"><span class="stk">Meta Graph API</span><span class="stk">WhatsApp Business API</span><span class="stk">LinkedIn API</span><span class="stk">TikTok API</span><span class="stk">Google Places API</span><span class="stk">360dialog</span></div>
+        <div class="scat">Automatisation No-code</div>
+        <div class="srow"><span class="stk">Make.com</span><span class="stk">Google Apps Script</span></div>
+      </div>
+      <div>
+        <div class="scat">Infra & Déploiement</div>
+        <div class="srow"><span class="stk">VPS Ubuntu 24</span><span class="stk">Nginx</span><span class="stk">systemd</span><span class="stk">supervisord</span><span class="stk">Let's Encrypt</span></div>
+        <div class="scat">Frontend & Outils</div>
+        <div class="srow"><span class="stk">HTML/CSS/JS</span><span class="stk">PWA</span><span class="stk">Playwright</span><span class="stk">ffmpeg</span><span class="stk">Cloudinary</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT / CALENDLY -->
+<section id="contact" class="cal-section">
+  <div class="inner">
+    <p class="eyebrow" style="margin-bottom:14px">// réservez votre démo</p>
+    <div class="cal-box">
+      <div class="cal-top">
+        <div>
+          <h2 class="cal-title">Réservez une démo gratuite de 20 minutes</h2>
+          <p class="cal-desc">On discute de votre processus, je vous montre ce qu'un agent IA peut automatiser chez vous — et vous repartez avec une estimation concrète.</p>
+          <div class="cal-perks">
+            <div class="cal-perk">Sans engagement, sans blabla commercial</div>
+            <div class="cal-perk">Je viens préparé grâce à votre questionnaire</div>
+            <div class="cal-perk">Estimation du ROI incluse dans l'appel</div>
+            <div class="cal-perk">Disponible en visio ou WhatsApp</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;padding:28px;background:rgba(124,58,237,.05);border:1px solid rgba(124,58,237,.12);border-radius:12px">
+          <div style="font-size:13px;color:var(--muted);font-weight:300;line-height:1.6">Avant la démo, je vous poserai 5 questions rapides :</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:13px;color:var(--muted);display:flex;gap:8px"><span style="color:var(--violet2);font-weight:500">→</span>Votre secteur d'activité</div>
+            <div style="font-size:13px;color:var(--muted);display:flex;gap:8px"><span style="color:var(--violet2);font-weight:500">→</span>Taille de votre équipe</div>
+            <div style="font-size:13px;color:var(--muted);display:flex;gap:8px"><span style="color:var(--violet2);font-weight:500">→</span>Votre principal problème aujourd'hui</div>
+            <div style="font-size:13px;color:var(--muted);display:flex;gap:8px"><span style="color:var(--violet2);font-weight:500">→</span>Avez-vous déjà testé une solution IA ?</div>
+            <div style="font-size:13px;color:var(--muted);display:flex;gap:8px"><span style="color:var(--violet2);font-weight:500">→</span>Budget approximatif (optionnel)</div>
+          </div>
+          <div style="font-size:11px;color:var(--faint);font-family:'JetBrains Mono',monospace;margin-top:4px">J'arrive à la démo avec du contexte — on ne perd pas de temps.</div>
+        </div>
+      </div>
+      <div class="cal-embed" style="padding:0;background:#0D0D14;min-height:650px;display:block">
+        <!-- Calendly inline widget begin -->
+        <div class="calendly-inline-widget" data-url="https://calendly.com/thee-ai/30min?hide_gdpr_banner=1&background_color=0D0D14&text_color=F8FAFC&primary_color=7C3AED" style="min-width:320px;height:650px;"></div>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+        <!-- Calendly inline widget end -->
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--border);padding:24px 48px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:rgba(0,0,0,.2)">
+      <div style="font-size:13px;color:var(--faint)">Ou contactez-moi directement :</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="https://wa.me/33783000334" target="_blank" class="btn-main" style="font-size:13px;padding:10px 20px">💬 WhatsApp : +33 7 83 00 03 34</a>
+        <a href="mailto:contact@agenc-ai.com" class="btn-ghost" style="font-size:13px;padding:10px 20px">✉️ contact@agenc-ai.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">AGEN'C AI</div>
+  <div style="display:flex;gap:20px;align-items:center">
+    <a href="mailto:contact@agenc-ai.com" style="font-size:12px;color:var(--faint);text-decoration:none;font-family:'JetBrains Mono',monospace">contact@agenc-ai.com</a>
+    <a href="https://wa.me/33783000334" target="_blank" style="font-size:12px;color:var(--faint);text-decoration:none;font-family:'JetBrains Mono',monospace">+33 7 83 00 03 34</a>
+  </div>
+  <div class="f-copy">// 2026 — SAS 2 Cash Enterprise · Agen'C AI</div>
+</footer>
+
+<script>
+// Terminal
+const lines=[
+  {t:'prompt',s:'$ deploy --agent naomy-ai --env production'},
+  {t:'out',s:'  → Connecting to VPS Ubuntu 24...'},
+  {t:'ok',s:'  ✓ FastAPI backend running on :8000'},
+  {t:'ok',s:'  ✓ Claude API initialized'},
+  {t:'ok',s:'  ✓ WhatsApp Business Cloud API ready'},
+  {t:'info',s:'  ✓ Serving 10+ African countries'},
+  {t:'out',s:''},
+  {t:'prompt',s:'$ status --all-agents'},
+  {t:'ok',s:'  [LIVE] naomy-ai    ● Marketing SaaS'},
+  {t:'ok',s:'  [LIVE] sarah-ai    ● Real Estate Chatbot'},
+  {t:'info',s:'  [ARCH] fastlivraison ● WhatsApp Delivery'},
+  {t:'out',s:''},
+  {t:'prompt',s:'$ ready-for-your-project'}
+];
+const colors={prompt:'#A78BFA',out:'#475569',ok:'#22C55E',info:'#22D3EE'};
+const el=document.getElementById('term');
+let li=0,ci=0,cur=null;
+function nextLine(){
+  if(li>=lines.length){const c=document.createElement('span');c.className='tcursor';el.appendChild(c);return}
+  const l=lines[li],d=document.createElement('div');
+  d.style.cssText=`color:${colors[l.t]};font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.8;white-space:pre`;
+  el.appendChild(d);cur=d;ci=0;typeC();
+}
+function typeC(){
+  const l=lines[li];
+  if(ci<l.s.length){cur.textContent+=l.s[ci++];setTimeout(typeC,l.t==='prompt'?32:7)}
+  else{li++;setTimeout(nextLine,l.t==='prompt'?280:50)}
+}
+setTimeout(nextLine,700);
+
+// Calculator
+function fmt(n){return n.toLocaleString('fr-FR')+'€'}
+function calc(){
+  const h=+document.getElementById('r1').value;
+  const p=+document.getElementById('r2').value;
+  const c=+document.getElementById('r3').value;
+  document.getElementById('v1').textContent=h+'h';
+  document.getElementById('v2').textContent=p+' personne'+(p>1?'s':'');
+  document.getElementById('v3').textContent=c+' €/h';
+  const autoH=Math.round(h*p*0.6);
+  const monthH=Math.round(autoH*4);
+  const monthE=Math.round(monthH*c);
+  const yearE=monthE*12;
+  document.getElementById('res-main').textContent=fmt(monthE);
+  document.getElementById('res-h').textContent=monthH+'h';
+  document.getElementById('ri1').textContent=autoH+'h/semaine';
+  document.getElementById('ri2').textContent=monthH+'h';
+  document.getElementById('ri3').textContent=fmt(yearE);
+}
+calc();
+</script>
+</body>
+</html>
