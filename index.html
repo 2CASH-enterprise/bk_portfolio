@@ -355,7 +355,7 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;justify
     <p class="eyebrow">// réalisations</p>
     <h2>Projets déployés en production</h2>
     <p class="sec-sub">Des solutions réelles, pour des marchés réels — avec les chiffres qui vont avec.</p>
-    <div class="proj-grid">
+    <div class="proj-grid" style="grid-template-columns:repeat(3,1fr)">
 
       <div class="proj-card">
         <div class="pc-head">
@@ -440,6 +440,93 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;justify
         </div>
         <div class="pc-foot">
           <span style="font-size:11px;color:var(--faint);font-family:'JetBrains Mono',monospace">Conception & architecture</span>
+          <span class="pc-per">2026</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="pc-head">
+          <div class="pc-icon di-cyan">📊</div>
+          <div class="pc-status"><span class="pcs-dot pcs-live-dot"></span><span class="pcs-live">Production</span></div>
+          <div class="pc-title">LemanAnalytics</div>
+          <div class="pc-type">SaaS · Reporting IA · Afrique &amp; Maghreb</div>
+        </div>
+        <div class="pc-body">
+          <p class="pc-desc">Plateforme de reporting marketing automatisé pour agences. Connexion aux comptes publicitaires réels (Meta Ads, Google Ads), analyse rédigée par IA avec garde-fou anti-hallucination, marque blanche, paiement local.</p>
+          <div class="pc-feats">
+            <div class="pc-feat">Garde-fou anti-hallucination — chaque chiffre IA vérifié</div>
+            <div class="pc-feat">153 tests automatisés sur Postgres éphémère</div>
+            <div class="pc-feat">Marque blanche + CinetPay (Mobile Money)</div>
+            <div class="pc-feat">3 intégrations OAuth réelles (Meta Ads, Google Ads, WA)</div>
+          </div>
+          <div class="pc-metrics">
+            <div class="pm"><span class="pm-v">153</span><span class="pm-l">Tests auto.</span></div>
+            <div class="pm"><span class="pm-v">3</span><span class="pm-l">OAuth réelles</span></div>
+            <div class="pm"><span class="pm-v">0</span><span class="pm-l">Hallucinations</span></div>
+            <div class="pm"><span class="pm-v">MB</span><span class="pm-l">Marque blanche</span></div>
+          </div>
+          <div class="pc-stack"><span class="stag">Node.js</span><span class="stag">TypeScript</span><span class="stag">Prisma</span><span class="stag">PostgreSQL</span><span class="stag">Meta Ads API</span><span class="stag">CinetPay</span></div>
+        </div>
+        <div class="pc-foot">
+          <span style="font-size:11px;color:var(--faint);font-family:'JetBrains Mono',monospace">Afrique / Maghreb</span>
+          <span class="pc-per">2026</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="pc-head">
+          <div class="pc-icon di-green">🛒</div>
+          <div class="pc-status"><span class="pcs-dot pcs-arch-dot"></span><span class="pcs-arch">MVP</span></div>
+          <div class="pc-title">AntyGaspy</div>
+          <div class="pc-type">E-commerce · Anti-gaspillage · Afrique</div>
+        </div>
+        <div class="pc-body">
+          <p class="pc-desc">Plateforme e-commerce anti-gaspillage alimentaire pour commerces (supermarchés, boulangeries, traiteurs). Architecture WhatsApp First → PWA premium, pensée pour le marché africain.</p>
+          <div class="pc-feats">
+            <div class="pc-feat">WhatsApp First — zéro friction d'adoption</div>
+            <div class="pc-feat">Génération d'images produits par IA mutualisée</div>
+            <div class="pc-feat">Visibilité configurable (public/semi-anonyme/privé)</div>
+            <div class="pc-feat">Module impact ESG intégré</div>
+          </div>
+          <div class="pc-metrics">
+            <div class="pm"><span class="pm-v">4</span><span class="pm-l">Modes paiement</span></div>
+            <div class="pm"><span class="pm-v">QR</span><span class="pm-l">Retrait magasin</span></div>
+            <div class="pm"><span class="pm-v">IA</span><span class="pm-l">Images auto.</span></div>
+            <div class="pm"><span class="pm-v">ESG</span><span class="pm-l">Impact tracker</span></div>
+          </div>
+          <div class="pc-stack"><span class="stag">Node.js</span><span class="stag">TypeScript</span><span class="stag">Prisma</span><span class="stag">PostgreSQL</span><span class="stag">WhatsApp API</span><span class="stag">PWA</span></div>
+        </div>
+        <div class="pc-foot">
+          <span style="font-size:11px;color:var(--faint);font-family:'JetBrains Mono',monospace">Conception & MVP</span>
+          <span class="pc-per">2026</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="pc-head">
+          <div class="pc-icon di-purple">🌿</div>
+          <div class="pc-status"><span class="pcs-dot pcs-live-dot"></span><span class="pcs-live">Production</span></div>
+          <div class="pc-title">ZOA Propreté</div>
+          <div class="pc-type">Site vitrine · Nettoyage pro · Bretagne</div>
+        </div>
+        <div class="pc-body">
+          <p class="pc-desc">Site vitrine premium pour une entreprise de nettoyage professionnel en Bretagne. Direction artistique haut de gamme, SEO local, WhatsApp flottant, déployé sur domaine personnalisé.</p>
+          <div class="pc-feats">
+            <div class="pc-feat">Design premium — vert sauge / ivoire / Manrope</div>
+            <div class="pc-feat">Blog SEO local (3 articles) + pages légales RGPD</div>
+            <div class="pc-feat">Score Lighthouse 90+ — zéro framework</div>
+            <div class="pc-feat">Livré en 1 session — 4 fichiers HTML autonomes</div>
+          </div>
+          <div class="pc-metrics">
+            <div class="pm"><span class="pm-v">90+</span><span class="pm-l">Lighthouse</span></div>
+            <div class="pm"><span class="pm-v">0</span><span class="pm-l">Dépendances</span></div>
+            <div class="pm"><span class="pm-v">3</span><span class="pm-l">Articles SEO</span></div>
+            <div class="pm"><span class="pm-v">1</span><span class="pm-l">Session</span></div>
+          </div>
+          <div class="pc-stack"><span class="stag">HTML5</span><span class="stag">CSS3</span><span class="stag">JS vanilla</span><span class="stag">GitHub Pages</span><span class="stag">DNS Hostinger</span></div>
+        </div>
+        <div class="pc-foot">
+          <a href="https://zoa-proprete.fr" target="_blank" class="pc-link">Voir le site →</a>
           <span class="pc-per">2026</span>
         </div>
       </div>
