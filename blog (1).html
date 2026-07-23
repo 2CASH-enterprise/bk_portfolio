@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — BAKOUBA KALJOP | AI Product Builder</title>
+<meta name="description" content="Articles sur l'IA en production, les agents conversationnels et le marché africain de la tech. Par BAKOUBA KALJOP, AI Product Builder.">
+<meta property="og:title" content="Blog — BAKOUBA KALJOP | AI Product Builder">
+<meta property="og:description" content="Articles sur l'IA en production, les agents conversationnels et le marché africain de la tech.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://2cash-enterprise.github.io/bk_portfolio/blog.html">
+<meta property="og:image" content="https://2cash-enterprise.github.io/bk_portfolio/og-blog.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Blog — BAKOUBA KALJOP | AI Product Builder">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://2cash-enterprise.github.io/bk_portfolio/blog.html">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0A0F;--bg-card:#111118;--bg-card2:#16161F;
+  --border:#1E1B2E;--border2:#2A2740;
+  --violet:#7C3AED;--violet2:#A78BFA;
+  --text:#F8FAFC;--muted:#94A3B8;--faint:#475569;
+  --green:#22C55E;--amber:#F59E0B;--cyan:#22D3EE;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:18px 48px;background:rgba(10,10,15,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:var(--violet2);text-decoration:none}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--violet2)}
+
+.hero{padding:120px 48px 60px;max-width:1100px;margin:0 auto}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--violet2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px}
+.hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,5vw,52px);font-weight:700;letter-spacing:-.02em;margin-bottom:16px;line-height:1.1}
+.hero-title span{background:linear-gradient(135deg,var(--violet2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:16px;color:var(--muted);font-weight:300;max-width:560px;line-height:1.7}
+
+.blog-wrap{max-width:1100px;margin:0 auto;padding:0 48px 100px}
+
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+.filter-btn{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;padding:7px 16px;border-radius:100px;border:1px solid var(--border2);background:none;color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:.03em}
+.filter-btn:hover{border-color:var(--violet2);color:var(--violet2)}
+.filter-btn.active{background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.4);color:var(--violet2)}
+
+.articles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.article-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,transform .2s,box-shadow .2s;text-decoration:none;color:inherit}
+.article-card:hover{border-color:rgba(124,58,237,.4);transform:translateY(-4px);box-shadow:0 16px 48px rgba(124,58,237,.1)}
+.card-cover{height:140px;background:linear-gradient(135deg,#1E1B2E,#111118);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;overflow:hidden}
+.card-cover-img{width:100%;height:100%;object-fit:cover}
+.card-cover-emoji{font-size:48px}
+.card-body{padding:20px;flex:1;display:flex;flex-direction:column;gap:12px}
+.card-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;padding:3px 9px;border-radius:100px;border:1px solid;letter-spacing:.03em}
+.tag-ia{background:rgba(124,58,237,.1);border-color:rgba(124,58,237,.25);color:var(--violet2)}
+.tag-afrique{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.2);color:var(--amber)}
+.tag-tuto{background:rgba(34,211,238,.08);border-color:rgba(34,211,238,.2);color:var(--cyan)}
+.tag-produit{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.2);color:var(--green)}
+.card-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.card-excerpt{font-size:13px;color:var(--muted);line-height:1.6;font-weight:300;flex:1}
+.card-meta{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--faint);font-family:'JetBrains Mono',monospace;margin-top:auto;padding-top:12px;border-top:1px solid var(--border)}
+.card-date{}
+.card-read{display:flex;align-items:center;gap:4px}
+
+.empty-state{text-align:center;padding:80px 20px;color:var(--faint)}
+.empty-icon{font-size:48px;display:block;margin-bottom:16px;opacity:.4}
+.empty-text{font-size:14px;line-height:1.7}
+
+footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--faint)}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--violet2);text-decoration:none}
+
+@media(max-width:900px){
+  nav{padding:14px 20px}
+  .hero,.blog-wrap{padding-left:20px;padding-right:20px}
+  .articles-grid{grid-template-columns:1fr}
+  footer{padding:20px;flex-direction:column;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">AGEN'C AI</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Portfolio</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">// blog</div>
+  <h1 class="hero-title">IA en production,<br><span>terrain africain</span></h1>
+  <p class="hero-sub">Retours d'expérience sur la construction d'agents IA réels, les décisions techniques difficiles, et la transformation numérique de l'Afrique.</p>
+</div>
+
+<div class="blog-wrap">
+  <div class="filters" id="filters">
+    <button class="filter-btn active" data-filter="all">Tous les articles</button>
+    <button class="filter-btn" data-filter="ia">IA & Agents</button>
+    <button class="filter-btn" data-filter="afrique">Afrique Tech</button>
+    <button class="filter-btn" data-filter="tuto">Tutoriels</button>
+    <button class="filter-btn" data-filter="produit">Produit</button>
+  </div>
+
+  <div class="articles-grid" id="articles-grid">
+    <div class="empty-state" id="empty-state" style="display:none">
+      <span class="empty-icon">📝</span>
+      <p class="empty-text">Aucun article dans cette catégorie pour l'instant.<br>Revenez bientôt !</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo">AGEN'C AI</a>
+  <span>© 2026 BAKOUBA KALJOP — AI Product Builder</span>
+</footer>
+
+<script>
+const STORAGE_KEY = 'bk_blog_articles';
+
+function getArticles() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  } catch { return []; }
+}
+
+function getTagClass(tag) {
+  const map = { ia: 'tag-ia', afrique: 'tag-afrique', tuto: 'tag-tuto', produit: 'tag-produit' };
+  return map[tag] || 'tag-ia';
+}
+
+function getTagLabel(tag) {
+  const map = { ia: 'IA & Agents', afrique: 'Afrique Tech', tuto: 'Tutoriel', produit: 'Produit' };
+  return map[tag] || tag;
+}
+
+function formatDate(iso) {
+  return new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function readTime(html) {
+  const words = html.replace(/<[^>]*>/g, '').split(/\s+/).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
+
+function renderArticles(filter = 'all') {
+  const articles = getArticles().filter(a => a.published);
+  const filtered = filter === 'all' ? articles : articles.filter(a => a.tags && a.tags.includes(filter));
+  const grid = document.getElementById('articles-grid');
+  const empty = document.getElementById('empty-state');
+
+  if (!filtered.length) {
+    grid.innerHTML = '';
+    grid.appendChild(empty);
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  grid.innerHTML = filtered.sort((a,b) => new Date(b.date) - new Date(a.date)).map(article => `
+    <a href="article.html?id=${article.id}" class="article-card">
+      <div class="card-cover">
+        ${article.cover ? `<img src="${article.cover}" class="card-cover-img" alt="${article.title}" onerror="this.style.display='none'">` : `<span class="card-cover-emoji">${article.emoji || '🤖'}</span>`}
+      </div>
+      <div class="card-body">
+        <div class="card-tags">
+          ${(article.tags || []).map(t => `<span class="tag ${getTagClass(t)}">${getTagLabel(t)}</span>`).join('')}
+        </div>
+        <div class="card-title">${article.title}</div>
+        <div class="card-excerpt">${article.excerpt || ''}</div>
+        <div class="card-meta">
+          <span class="card-date">${formatDate(article.date)}</span>
+          <span class="card-read">⏱ ${readTime(article.content)} min</span>
+        </div>
+      </div>
+    </a>
+  `).join('');
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderArticles(btn.dataset.filter);
+  });
+});
+
+renderArticles();
+</script>
+</body>
+</html>
