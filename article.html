@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="meta-title">Article — BAKOUBA KALJOP</title>
+<meta name="description" id="meta-desc" content="">
+<meta property="og:title" id="og-title" content="">
+<meta property="og:description" id="og-desc" content="">
+<meta property="og:type" content="article">
+<meta property="og:url" id="og-url" content="">
+<meta property="og:image" id="og-image" content="">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" id="tw-title" content="">
+<meta name="twitter:description" id="tw-desc" content="">
+<link id="canonical" rel="canonical" href="">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0A0F;--bg-card:#111118;--bg-card2:#16161F;
+  --border:#1E1B2E;--border2:#2A2740;
+  --violet:#7C3AED;--violet2:#A78BFA;
+  --text:#F8FAFC;--muted:#94A3B8;--faint:#475569;
+  --green:#22C55E;--amber:#F59E0B;--cyan:#22D3EE;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:18px 48px;background:rgba(10,10,15,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:var(--violet2);text-decoration:none}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--violet2)}
+
+.article-wrap{max-width:760px;margin:0 auto;padding:110px 24px 80px}
+
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--faint);margin-bottom:32px;font-family:'JetBrains Mono',monospace}
+.breadcrumb a{color:var(--faint);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--violet2)}
+.breadcrumb-sep{opacity:.4}
+
+.article-header{margin-bottom:40px}
+.article-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tag{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;padding:3px 9px;border-radius:100px;border:1px solid;letter-spacing:.03em}
+.tag-ia{background:rgba(124,58,237,.1);border-color:rgba(124,58,237,.25);color:var(--violet2)}
+.tag-afrique{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.2);color:var(--amber)}
+.tag-tuto{background:rgba(34,211,238,.08);border-color:rgba(34,211,238,.2);color:var(--cyan)}
+.tag-produit{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.2);color:var(--green)}
+
+.article-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-.02em;line-height:1.2;margin-bottom:16px}
+.article-meta{display:flex;align-items:center;gap:20px;font-size:12px;color:var(--faint);font-family:'JetBrains Mono',monospace;flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:8px}
+.meta-avatar{width:28px;height:28px;border-radius:50%;background:var(--violet);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;font-family:'Space Grotesk',sans-serif}
+
+.article-cover{width:100%;height:300px;object-fit:cover;border-radius:12px;margin-bottom:40px;display:none}
+.article-cover.visible{display:block}
+
+.article-body{font-size:16px;line-height:1.8;color:var(--muted)}
+.article-body h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--text);margin:36px 0 16px;letter-spacing:-.01em}
+.article-body h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;color:var(--text);margin:28px 0 12px}
+.article-body p{margin-bottom:18px;color:var(--muted);font-weight:300}
+.article-body strong{color:var(--text);font-weight:500}
+.article-body ul,.article-body ol{margin:0 0 18px 20px}
+.article-body li{margin-bottom:8px;color:var(--muted);font-weight:300}
+.article-body blockquote{border-left:3px solid var(--violet);padding:12px 20px;margin:24px 0;background:rgba(124,58,237,.05);border-radius:0 8px 8px 0}
+.article-body blockquote p{color:var(--violet2);font-style:italic;margin:0}
+.article-body code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(124,58,237,.1);color:var(--violet2);padding:2px 7px;border-radius:4px}
+.article-body pre{background:#0D0D14;border:1px solid var(--border2);border-radius:10px;padding:20px;margin:24px 0;overflow-x:auto}
+.article-body pre code{background:none;color:var(--muted);padding:0;font-size:13px}
+.article-body a{color:var(--violet2);text-decoration:none;border-bottom:1px solid rgba(167,139,250,.3);transition:border-color .2s}
+.article-body a:hover{border-color:var(--violet2)}
+.article-body hr{border:none;border-top:1px solid var(--border);margin:36px 0}
+
+.toc{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:36px 0}
+.toc-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:var(--violet2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.toc-item a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:8px}
+.toc-item a::before{content:'→';color:var(--violet2);font-size:11px}
+.toc-item a:hover{color:var(--violet2)}
+
+.share-section{margin:48px 0;padding:28px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px}
+.share-title{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.share-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;border:1px solid var(--border2);color:var(--muted);cursor:pointer;background:none;transition:all .2s}
+.share-btn:hover{color:var(--text);border-color:var(--border2)}
+.share-btn.linkedin{border-color:rgba(10,102,194,.3);color:#0A66C2}
+.share-btn.linkedin:hover{background:rgba(10,102,194,.08)}
+.share-btn.twitter{border-color:rgba(29,155,240,.3);color:#1D9BF0}
+.share-btn.twitter:hover{background:rgba(29,155,240,.08)}
+.share-btn.whatsapp{border-color:rgba(37,211,102,.3);color:#25D366}
+.share-btn.whatsapp:hover{background:rgba(37,211,102,.08)}
+.share-btn.facebook{border-color:rgba(24,119,242,.3);color:#1877F2}
+.share-btn.facebook:hover{background:rgba(24,119,242,.08)}
+.share-btn.copy{border-color:var(--border2);color:var(--muted)}
+.share-btn.copy:hover{border-color:var(--violet2);color:var(--violet2)}
+.share-btn.copy.copied{border-color:var(--green);color:var(--green)}
+
+.nav-articles{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:48px;padding-top:40px;border-top:1px solid var(--border)}
+.nav-article{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;color:inherit;transition:border-color .2s}
+.nav-article:hover{border-color:rgba(124,58,237,.3)}
+.nav-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);margin-bottom:6px;letter-spacing:.06em}
+.nav-atitle{font-size:13px;font-weight:500;color:var(--text);line-height:1.4}
+.nav-article.next{text-align:right}
+
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:32px;transition:color .2s}
+.back-btn:hover{color:var(--violet2)}
+
+.not-found{text-align:center;padding:80px 20px;color:var(--faint)}
+
+footer{border-top:1px solid var(--border);padding:28px 48px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--faint)}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--violet2);text-decoration:none}
+
+@media(max-width:700px){
+  nav{padding:14px 20px}
+  .article-wrap{padding:100px 16px 60px}
+  .nav-articles{grid-template-columns:1fr}
+  .share-buttons{gap:6px}
+  .share-btn{padding:8px 12px;font-size:12px}
+  footer{padding:20px;flex-direction:column;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">AGEN'C AI</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Portfolio</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="article-wrap" id="article-wrap">
+  <div class="not-found" id="not-found" style="display:none">
+    <p style="font-size:48px;margin-bottom:16px">😕</p>
+    <p style="font-size:16px;margin-bottom:20px">Article introuvable.</p>
+    <a href="blog.html" style="color:var(--violet2)">← Retour au blog</a>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo">AGEN'C AI</a>
+  <span>© 2026 BAKOUBA KALJOP — AI Product Builder</span>
+</footer>
+
+<script>
+const STORAGE_KEY = 'bk_blog_articles';
+
+function getArticles() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+  catch { return []; }
+}
+
+function getTagClass(tag) {
+  const map = { ia:'tag-ia', afrique:'tag-afrique', tuto:'tag-tuto', produit:'tag-produit' };
+  return map[tag] || 'tag-ia';
+}
+
+function getTagLabel(tag) {
+  const map = { ia:'IA & Agents', afrique:'Afrique Tech', tuto:'Tutoriel', produit:'Produit' };
+  return map[tag] || tag;
+}
+
+function formatDate(iso) {
+  return new Date(iso).toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'});
+}
+
+function readTime(html) {
+  const words = html.replace(/<[^>]*>/g,'').split(/\s+/).length;
+  return Math.max(1, Math.ceil(words/200));
+}
+
+function buildTOC(html) {
+  const matches = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
+  if (matches.length < 2) return '';
+  const items = matches.map((m,i) => {
+    const text = m[1].replace(/<[^>]*>/g,'');
+    const id = 'section-' + i;
+    return { text, id };
+  });
+  return `
+    <div class="toc">
+      <div class="toc-title">Table des matières</div>
+      <ul class="toc-list">
+        ${items.map(item => `<li class="toc-item"><a href="#${item.id}">${item.text}</a></li>`).join('')}
+      </ul>
+    </div>
+  `;
+}
+
+function addIDsToHeadings(html) {
+  let i = 0;
+  return html.replace(/<h2([^>]*)>/gi, () => `<h2 id="section-${i++}">`);
+}
+
+function shareURL() {
+  return window.location.href;
+}
+
+function initShare(title, excerpt) {
+  const url = encodeURIComponent(shareURL());
+  const text = encodeURIComponent(`"${title}" par BAKOUBA KALJOP — AI Product Builder`);
+  const excerpt_enc = encodeURIComponent(excerpt || '');
+
+  return `
+    <div class="share-section">
+      <div class="share-title">// Partager cet article</div>
+      <div class="share-buttons">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=${url}" target="_blank" class="share-btn linkedin">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://twitter.com/intent/tweet?url=${url}&text=${text}" target="_blank" class="share-btn twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Twitter / X
+        </a>
+        <a href="https://wa.me/?text=${text}%20${url}" target="_blank" class="share-btn whatsapp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=${url}" target="_blank" class="share-btn facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          Facebook
+        </a>
+        <button class="share-btn copy" id="copy-btn" onclick="copyLink()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          Copier le lien
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(shareURL()).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Lien copié !`;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copier le lien`;
+    }, 2500);
+  });
+}
+
+function renderArticle() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const articles = getArticles().filter(a => a.published);
+  const article = articles.find(a => a.id === id);
+  const wrap = document.getElementById('article-wrap');
+
+  if (!article) {
+    document.getElementById('not-found').style.display = 'block';
+    return;
+  }
+
+  const minutes = readTime(article.content);
+  const contentWithIDs = addIDsToHeadings(article.content);
+  const toc = buildTOC(article.content);
+
+  const idx = articles.sort((a,b) => new Date(b.date)-new Date(a.date)).findIndex(a => a.id === id);
+  const prev = articles[idx+1];
+  const next = articles[idx-1];
+
+  document.title = article.title + ' — BAKOUBA KALJOP';
+  document.getElementById('meta-title').textContent = article.title + ' — BAKOUBA KALJOP';
+  document.getElementById('meta-desc').setAttribute('content', article.excerpt || '');
+  document.getElementById('og-title').setAttribute('content', article.title);
+  document.getElementById('og-desc').setAttribute('content', article.excerpt || '');
+  document.getElementById('og-url').setAttribute('content', shareURL());
+  document.getElementById('og-image').setAttribute('content', article.cover || '');
+  document.getElementById('tw-title').setAttribute('content', article.title);
+  document.getElementById('tw-desc').setAttribute('content', article.excerpt || '');
+  document.getElementById('canonical').setAttribute('href', shareURL());
+
+  wrap.innerHTML = `
+    <div class="breadcrumb">
+      <a href="index.html">Portfolio</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="blog.html">Blog</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>${article.title.substring(0,40)}${article.title.length > 40 ? '...' : ''}</span>
+    </div>
+
+    <div class="article-header">
+      <div class="article-tags">
+        ${(article.tags||[]).map(t => `<span class="tag ${getTagClass(t)}">${getTagLabel(t)}</span>`).join('')}
+      </div>
+      <h1 class="article-title">${article.title}</h1>
+      <div class="article-meta">
+        <div class="meta-author">
+          <div class="meta-avatar">BK</div>
+          <span>BAKOUBA KALJOP</span>
+        </div>
+        <span>${formatDate(article.date)}</span>
+        <span>⏱ ${minutes} min de lecture</span>
+      </div>
+    </div>
+
+    ${article.cover ? `<img src="${article.cover}" class="article-cover visible" alt="${article.title}">` : ''}
+
+    ${toc}
+
+    <div class="article-body">${contentWithIDs}</div>
+
+    ${initShare(article.title, article.excerpt)}
+
+    <div class="nav-articles">
+      ${prev ? `<a href="article.html?id=${prev.id}" class="nav-article prev">
+        <div class="nav-label">← Article précédent</div>
+        <div class="nav-atitle">${prev.title}</div>
+      </a>` : '<div></div>'}
+      ${next ? `<a href="article.html?id=${next.id}" class="nav-article next">
+        <div class="nav-label">Article suivant →</div>
+        <div class="nav-atitle">${next.title}</div>
+      </a>` : '<div></div>'}
+    </div>
+  `;
+}
+
+renderArticle();
+</script>
+</body>
+</html>
