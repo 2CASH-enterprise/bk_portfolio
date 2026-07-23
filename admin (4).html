@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Blog — AGEN'C AI</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0A0F;--bg-card:#111118;--bg-card2:#16161F;
+  --border:#1E1B2E;--border2:#2A2740;
+  --violet:#7C3AED;--violet2:#A78BFA;
+  --text:#F8FAFC;--muted:#94A3B8;--faint:#475569;
+  --green:#22C55E;--amber:#F59E0B;--red:#EF4444;--cyan:#22D3EE;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 32px;background:var(--bg-card);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:var(--violet2);text-decoration:none}
+.nav-right{display:flex;gap:12px;align-items:center}
+.nav-link{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-link:hover{color:var(--text)}
+
+.app{display:grid;grid-template-columns:320px 1fr;min-height:calc(100vh - 60px)}
+
+/* SIDEBAR ARTICLES */
+.sidebar{background:var(--bg-card);border-right:1px solid var(--border);padding:20px;overflow-y:auto}
+.sidebar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.sidebar-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600}
+.btn-new{background:var(--violet);color:#fff;border:none;padding:7px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;transition:background .2s}
+.btn-new:hover{background:#6D28D9}
+
+.article-list{display:flex;flex-direction:column;gap:8px}
+.article-item{background:var(--bg-card2);border:1px solid var(--border);border-radius:8px;padding:12px;cursor:pointer;transition:border-color .2s}
+.article-item:hover,.article-item.active{border-color:rgba(124,58,237,.4)}
+.article-item.active{background:rgba(124,58,237,.06)}
+.ai-title{font-size:13px;font-weight:500;margin-bottom:4px;line-height:1.3}
+.ai-meta{font-size:10px;color:var(--faint);font-family:'JetBrains Mono',monospace;display:flex;justify-content:space-between}
+.ai-status{font-size:9px;font-family:'JetBrains Mono',monospace;padding:2px 7px;border-radius:100px}
+.status-published{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.status-draft{background:rgba(148,163,184,.08);color:var(--muted);border:1px solid var(--border)}
+
+.empty-list{text-align:center;padding:40px 16px;color:var(--faint);font-size:12px}
+
+/* EDITOR */
+.editor{padding:28px;overflow-y:auto;display:flex;flex-direction:column;gap:20px}
+.editor-placeholder{display:flex;align-items:center;justify-content:center;height:100%;color:var(--faint);font-size:14px;text-align:center;flex-direction:column;gap:12px}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+label{font-size:11px;color:var(--muted);font-weight:500;font-family:'JetBrains Mono',monospace;letter-spacing:.04em;text-transform:uppercase}
+input[type=text],input[type=date],input[type=url],select,textarea{
+  background:var(--bg-card2);
+  border:1px solid var(--border2);
+  color:var(--text);
+  padding:10px 14px;
+  border-radius:8px;
+  font-size:13px;
+  font-family:'Inter',sans-serif;
+  transition:border-color .2s;
+  outline:none;
+}
+input:focus,select:focus,textarea:focus{border-color:rgba(124,58,237,.5)}
+textarea{resize:vertical;min-height:100px;line-height:1.6}
+select option{background:var(--bg-card2)}
+
+.content-editor{
+  background:var(--bg-card2);
+  border:1px solid var(--border2);
+  color:var(--text);
+  padding:16px;
+  border-radius:8px;
+  font-size:13px;
+  font-family:'JetBrains Mono',monospace;
+  resize:vertical;
+  min-height:320px;
+  line-height:1.7;
+  transition:border-color .2s;
+  outline:none;
+}
+.content-editor:focus{border-color:rgba(124,58,237,.5)}
+
+.editor-hint{font-size:11px;color:var(--faint);font-family:'JetBrains Mono',monospace;margin-top:4px}
+
+.tags-group{display:flex;gap:8px;flex-wrap:wrap}
+.tag-check{display:flex;align-items:center;gap:6px;cursor:pointer}
+.tag-check input{display:none}
+.tag-pill{font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 12px;border-radius:100px;border:1px solid var(--border2);color:var(--muted);cursor:pointer;transition:all .2s;user-select:none}
+.tag-check input:checked ~ .tag-pill.ia{background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.4);color:var(--violet2)}
+.tag-check input:checked ~ .tag-pill.afrique{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3);color:var(--amber)}
+.tag-check input:checked ~ .tag-pill.tuto{background:rgba(34,211,238,.08);border-color:rgba(34,211,238,.3);color:var(--cyan)}
+.tag-check input:checked ~ .tag-pill.produit{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3);color:var(--green)}
+
+.preview-box{background:#0D0D14;border:1px solid var(--border2);border-radius:8px;padding:20px;min-height:100px}
+.preview-box h2{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;color:var(--text);margin:20px 0 10px}
+.preview-box h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin:16px 0 8px}
+.preview-box p{font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.7;font-weight:300}
+.preview-box strong{color:var(--text);font-weight:500}
+.preview-box ul,.preview-box ol{margin:0 0 12px 18px}
+.preview-box li{font-size:13px;color:var(--muted);margin-bottom:5px}
+.preview-box blockquote{border-left:3px solid var(--violet);padding:10px 16px;margin:16px 0;background:rgba(124,58,237,.05)}
+.preview-box blockquote p{color:var(--violet2);font-style:italic}
+.preview-box code{font-family:'JetBrains Mono',monospace;font-size:11px;background:rgba(124,58,237,.1);color:var(--violet2);padding:1px 5px;border-radius:3px}
+.preview-empty{color:var(--faint);font-size:12px;font-family:'JetBrains Mono',monospace;text-align:center;padding:20px}
+
+.actions{display:flex;gap:10px;padding:16px 0;border-top:1px solid var(--border);flex-wrap:wrap}
+.btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+.btn-primary{background:var(--violet);color:#fff}
+.btn-primary:hover{background:#6D28D9}
+.btn-draft{background:var(--bg-card2);color:var(--muted);border:1px solid var(--border2)}
+.btn-draft:hover{color:var(--text);border-color:var(--border)}
+.btn-danger{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2)}
+.btn-danger:hover{background:rgba(239,68,68,.15)}
+.btn-preview{background:rgba(124,58,237,.1);color:var(--violet2);border:1px solid rgba(124,58,237,.2)}
+.btn-preview:hover{background:rgba(124,58,237,.15)}
+.btn-view{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.btn-view:hover{background:rgba(34,197,94,.15)}
+
+.toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;border-radius:8px;font-size:13px;display:none;align-items:center;gap:8px;z-index:999}
+.toast.show{display:flex}
+.toast.success{background:var(--bg-card2);border:1px solid rgba(34,197,94,.3);color:var(--green)}
+.toast.error{background:var(--bg-card2);border:1px solid rgba(239,68,68,.3);color:var(--red)}
+
+.seo-score{display:flex;align-items:center;gap:8px;font-size:12px}
+.score-bar{flex:1;height:4px;background:var(--border2);border-radius:2px;overflow:hidden}
+.score-fill{height:100%;border-radius:2px;transition:width .3s}
+
+@media(max-width:900px){
+  .app{grid-template-columns:1fr}
+  .sidebar{max-height:280px}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">AGEN'C AI · Admin Blog</a>
+  <div class="nav-right">
+    <a href="blog.html" class="nav-link" target="_blank">Voir le blog →</a>
+  </div>
+</nav>
+
+<div class="app">
+
+  <!-- LISTE DES ARTICLES -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">Articles</div>
+      <button class="btn-new" onclick="newArticle()">+ Nouveau</button>
+    </div>
+    <div class="article-list" id="article-list">
+      <div class="empty-list">Aucun article.<br>Cliquez sur "+ Nouveau" pour commencer.</div>
+    </div>
+  </div>
+
+  <!-- ÉDITEUR -->
+  <div class="editor" id="editor">
+    <div class="editor-placeholder">
+      <span style="font-size:40px">✍️</span>
+      <span>Sélectionnez un article ou créez-en un nouveau.</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'bk_blog_articles';
+let currentId = null;
+
+function getArticles() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+  catch { return []; }
+}
+
+function saveArticles(articles) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+}
+
+function genId() {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2,5);
+}
+
+function toast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function formatDate(iso) {
+  return new Date(iso).toLocaleDateString('fr-FR', {day:'numeric', month:'short', year:'numeric'});
+}
+
+function readTime(html) {
+  const words = html.replace(/<[^>]*>/g,'').split(/\s+/).length;
+  return Math.max(1, Math.ceil(words/200));
+}
+
+function seoScore(article) {
+  let score = 0;
+  if (article.title && article.title.length >= 30) score += 20;
+  if (article.excerpt && article.excerpt.length >= 80) score += 20;
+  if (article.slug) score += 15;
+  if (article.metaDesc && article.metaDesc.length >= 100) score += 20;
+  if (article.content && article.content.replace(/<[^>]*>/g,'').length >= 500) score += 15;
+  if (article.tags && article.tags.length > 0) score += 10;
+  return score;
+}
+
+function seoColor(score) {
+  if (score >= 80) return 'var(--green)';
+  if (score >= 50) return 'var(--amber)';
+  return 'var(--red)';
+}
+
+function renderList() {
+  const articles = getArticles();
+  const list = document.getElementById('article-list');
+  if (!articles.length) {
+    list.innerHTML = '<div class="empty-list">Aucun article.<br>Cliquez sur "+ Nouveau" pour commencer.</div>';
+    return;
+  }
+  list.innerHTML = articles.sort((a,b) => new Date(b.date)-new Date(a.date)).map(a => `
+    <div class="article-item ${a.id === currentId ? 'active' : ''}" onclick="loadArticle('${a.id}')">
+      <div class="ai-title">${a.title || 'Sans titre'}</div>
+      <div class="ai-meta">
+        <span>${formatDate(a.date)}</span>
+        <span class="ai-status ${a.published ? 'status-published' : 'status-draft'}">${a.published ? 'Publié' : 'Brouillon'}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function newArticle() {
+  currentId = genId();
+  const articles = getArticles();
+  const newA = {
+    id: currentId, title: '', slug: '', excerpt: '', content: '', cover: '', emoji: '🤖',
+    tags: [], date: new Date().toISOString().split('T')[0], metaDesc: '', published: false
+  };
+  articles.unshift(newA);
+  saveArticles(articles);
+  renderList();
+  loadArticle(currentId);
+}
+
+function loadArticle(id) {
+  currentId = id;
+  const articles = getArticles();
+  const article = articles.find(a => a.id === id);
+  if (!article) return;
+
+  renderList();
+  const score = seoScore(article);
+
+  document.getElementById('editor').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600">Éditer l'article</div>
+      <div class="seo-score">
+        <span style="font-size:11px;color:var(--faint);font-family:'JetBrains Mono',monospace">SEO</span>
+        <div class="score-bar"><div class="score-fill" style="width:${score}%;background:${seoColor(score)}"></div></div>
+        <span style="font-size:12px;font-weight:600;color:${seoColor(score)};font-family:'JetBrains Mono',monospace;min-width:32px">${score}%</span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Titre de l'article *</label>
+        <input type="text" id="f-title" placeholder="Comment j'ai construit un agent IA en production" value="${escHtml(article.title)}" oninput="autoSlug();updateSEO()">
+      </div>
+      <div class="form-group">
+        <label>Slug URL *</label>
+        <input type="text" id="f-slug" placeholder="comment-agent-ia-production" value="${escHtml(article.slug)}" oninput="updateSEO()">
+        <span class="editor-hint">article.html?id=${id}</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Extrait / Description courte *</label>
+      <textarea id="f-excerpt" rows="2" placeholder="Résumé de 1-2 phrases qui apparaît dans la liste du blog et sur les réseaux sociaux..." oninput="updateSEO()">${escHtml(article.excerpt)}</textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Meta description SEO</label>
+        <input type="text" id="f-metadesc" placeholder="Description pour Google (150-160 caractères)" value="${escHtml(article.metaDesc)}" oninput="updateSEO()">
+        <span class="editor-hint" id="meta-count">${(article.metaDesc||'').length}/160 caractères</span>
+      </div>
+      <div class="form-group">
+        <label>Date de publication</label>
+        <input type="date" id="f-date" value="${article.date}">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>URL image de couverture</label>
+        <input type="url" id="f-cover" placeholder="https://..." value="${escHtml(article.cover||'')}">
+      </div>
+      <div class="form-group">
+        <label>Emoji (si pas d'image)</label>
+        <input type="text" id="f-emoji" placeholder="🤖" value="${escHtml(article.emoji||'🤖')}" maxlength="4">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Catégories / Tags</label>
+      <div class="tags-group">
+        <label class="tag-check">
+          <input type="checkbox" value="ia" ${(article.tags||[]).includes('ia')?'checked':''} onchange="updateSEO()">
+          <span class="tag-pill ia">IA & Agents</span>
+        </label>
+        <label class="tag-check">
+          <input type="checkbox" value="afrique" ${(article.tags||[]).includes('afrique')?'checked':''} onchange="updateSEO()">
+          <span class="tag-pill afrique">Afrique Tech</span>
+        </label>
+        <label class="tag-check">
+          <input type="checkbox" value="tuto" ${(article.tags||[]).includes('tuto')?'checked':''} onchange="updateSEO()">
+          <span class="tag-pill tuto">Tutoriel</span>
+        </label>
+        <label class="tag-check">
+          <input type="checkbox" value="produit" ${(article.tags||[]).includes('produit')?'checked':''} onchange="updateSEO()">
+          <span class="tag-pill produit">Produit</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Contenu de l'article (HTML) *</label>
+      <textarea class="content-editor" id="f-content" placeholder="Collez ici votre article en HTML :&#10;&#10;&lt;h2&gt;Titre de section&lt;/h2&gt;&#10;&lt;p&gt;Votre texte ici...&lt;/p&gt;&#10;&lt;ul&gt;&#10;  &lt;li&gt;Point 1&lt;/li&gt;&#10;&lt;/ul&gt;&#10;&lt;blockquote&gt;&lt;p&gt;Citation importante&lt;/p&gt;&lt;/blockquote&gt;" oninput="updatePreview();updateSEO()">${escHtml(article.content)}</textarea>
+      <span class="editor-hint" id="word-count">${article.content ? article.content.replace(/<[^>]*>/g,'').split(/\s+/).filter(w=>w).length : 0} mots · ${readTime(article.content||'')} min de lecture</span>
+    </div>
+
+    <div class="form-group">
+      <label>Aperçu du contenu</label>
+      <div class="preview-box" id="preview-box">
+        ${article.content ? article.content : '<span class="preview-empty">L\'aperçu apparaîtra ici...</span>'}
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="publishArticle()">✅ Publier</button>
+      <button class="btn btn-draft" onclick="saveDraft()">💾 Sauvegarder brouillon</button>
+      <button class="btn btn-preview" onclick="previewArticle()">👁 Voir l'article</button>
+      ${article.published ? `<button class="btn btn-view" onclick="viewLive()">🔗 Voir en live</button>` : ''}
+      <button class="btn btn-danger" onclick="deleteArticle()">🗑 Supprimer</button>
+    </div>
+  `;
+}
+
+function escHtml(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function autoSlug() {
+  const title = document.getElementById('f-title').value;
+  const slug = title.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9\s-]/g,'')
+    .trim().replace(/\s+/g,'-');
+  document.getElementById('f-slug').value = slug;
+}
+
+function updateSEO() {
+  const metaEl = document.getElementById('f-metadesc');
+  if (metaEl) {
+    const len = metaEl.value.length;
+    const countEl = document.getElementById('meta-count');
+    if (countEl) countEl.textContent = `${len}/160 caractères`;
+    countEl.style.color = len > 160 ? 'var(--red)' : len >= 100 ? 'var(--green)' : 'var(--faint)';
+  }
+  const article = collectFormData();
+  const score = seoScore(article);
+  const scoreEl = document.querySelector('.seo-score span:last-child');
+  const scoreFill = document.querySelector('.score-fill');
+  if (scoreEl) { scoreEl.textContent = score + '%'; scoreEl.style.color = seoColor(score); }
+  if (scoreFill) { scoreFill.style.width = score + '%'; scoreFill.style.background = seoColor(score); }
+}
+
+function updatePreview() {
+  const content = document.getElementById('f-content').value;
+  const preview = document.getElementById('preview-box');
+  const wordCountEl = document.getElementById('word-count');
+  if (preview) preview.innerHTML = content || '<span class="preview-empty">L\'aperçu apparaîtra ici...</span>';
+  if (wordCountEl) {
+    const words = content.replace(/<[^>]*>/g,'').split(/\s+/).filter(w=>w).length;
+    wordCountEl.textContent = `${words} mots · ${readTime(content)} min de lecture`;
+  }
+}
+
+function collectFormData() {
+  const tags = [...document.querySelectorAll('.tag-check input:checked')].map(el => el.value);
+  return {
+    id: currentId,
+    title: document.getElementById('f-title')?.value || '',
+    slug: document.getElementById('f-slug')?.value || '',
+    excerpt: document.getElementById('f-excerpt')?.value || '',
+    metaDesc: document.getElementById('f-metadesc')?.value || '',
+    date: document.getElementById('f-date')?.value || new Date().toISOString().split('T')[0],
+    cover: document.getElementById('f-cover')?.value || '',
+    emoji: document.getElementById('f-emoji')?.value || '🤖',
+    content: document.getElementById('f-content')?.value || '',
+    tags,
+  };
+}
+
+function saveDraft() {
+  const data = collectFormData();
+  if (!data.title) { toast('Le titre est obligatoire', 'error'); return; }
+  const articles = getArticles();
+  const idx = articles.findIndex(a => a.id === currentId);
+  if (idx >= 0) {
+    articles[idx] = { ...articles[idx], ...data, published: false };
+  }
+  saveArticles(articles);
+  renderList();
+  toast('Brouillon sauvegardé ✓');
+}
+
+function publishArticle() {
+  const data = collectFormData();
+  if (!data.title) { toast('Le titre est obligatoire', 'error'); return; }
+  if (!data.content) { toast('Le contenu est obligatoire', 'error'); return; }
+  if (!data.excerpt) { toast('L\'extrait est obligatoire pour le SEO', 'error'); return; }
+  const articles = getArticles();
+  const idx = articles.findIndex(a => a.id === currentId);
+  if (idx >= 0) {
+    articles[idx] = { ...articles[idx], ...data, published: true };
+  }
+  saveArticles(articles);
+  renderList();
+  loadArticle(currentId);
+  toast('Article publié avec succès ! ✓');
+}
+
+function previewArticle() {
+  saveDraft();
+  window.open(`article.html?id=${currentId}`, '_blank');
+}
+
+function viewLive() {
+  window.open(`article.html?id=${currentId}`, '_blank');
+}
+
+function deleteArticle() {
+  if (!confirm('Supprimer cet article définitivement ?')) return;
+  const articles = getArticles().filter(a => a.id !== currentId);
+  saveArticles(articles);
+  currentId = null;
+  renderList();
+  document.getElementById('editor').innerHTML = `
+    <div class="editor-placeholder">
+      <span style="font-size:40px">✍️</span>
+      <span>Sélectionnez un article ou créez-en un nouveau.</span>
+    </div>`;
+  toast('Article supprimé');
+}
+
+renderList();
+</script>
+</body>
+</html>
